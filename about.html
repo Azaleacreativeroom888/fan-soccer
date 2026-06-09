@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — SAMURAI BLUE FAN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0d1f52;
+      --navy-deep: #080f2e;
+      --blue:      #1a3a7c;
+      --blue-mid:  #234fa0;
+      --red:       #c8102e;
+      --gold:      #d4af37;
+      --white:     #f0f4ff;
+      --gray:      #8898bb;
+      --line:      rgba(212, 175, 55, 0.25);
+    }
+
+    body {
+      background: var(--navy-deep);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(8, 15, 46, 0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 60px;
+    }
+
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .badge {
+      width: 28px; height: 28px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      flex-shrink: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    nav a { color: var(--gray); transition: color 0.2s; text-transform: uppercase; }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    /* MAIN */
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 100px 1.5rem 5rem;
+    }
+
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* PROFILE */
+    .profile-card {
+      background: rgba(13, 31, 82, 0.6);
+      border: 1px solid var(--line);
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .profile-card p {
+      font-size: 0.9rem;
+      color: rgba(240, 244, 255, 0.8);
+      line-height: 1.9;
+    }
+
+    .profile-card p + p { margin-top: 0.8em; }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* LINK GRID */
+    .link-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(13, 31, 82, 0.6);
+      border: 1px solid var(--line);
+      padding: 0.9rem 1rem;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .link-card:hover {
+      background: rgba(26, 58, 124, 0.5);
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+
+    .link-icon {
+      font-size: 1.1rem;
+      width: 36px; height: 36px;
+      background: rgba(26, 58, 124, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .link-text { flex: 1; min-width: 0; }
+
+    .link-name {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1px;
+    }
+
+    .link-desc {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--gray);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-arrow {
+      color: var(--gold);
+      font-size: 1rem;
+      opacity: 0.6;
+      transition: transform 0.15s;
+      flex-shrink: 0;
+    }
+
+    .link-card:hover .link-arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    /* CONTACT FORM */
+    .form-card {
+      background: rgba(13, 31, 82, 0.6);
+      border: 1px solid var(--line);
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-intro {
+      font-size: 0.83rem;
+      color: var(--gray);
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+
+    .form-success {
+      background: rgba(26, 58, 124, 0.4);
+      border: 1px solid var(--gold);
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    .form-label {
+      display: block;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.4rem;
+    }
+
+    .required { color: var(--red); margin-left: 2px; }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: rgba(8, 15, 46, 0.8);
+      border: 1px solid rgba(136, 152, 187, 0.3);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.88rem;
+      padding: 0.6rem 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(136, 152, 187, 0.4); }
+
+    .form-input:focus,
+    .form-textarea:focus { border-color: var(--gold); }
+
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--navy-deep);
+      border: none;
+      padding: 0.65rem 1.8rem;
+      cursor: pointer;
+      margin-top: 0.4rem;
+      transition: background 0.15s;
+    }
+
+    .form-submit:hover { background: #f0d060; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-nav a:hover { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .link-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html" class="header-logo">
+      <div class="badge">JPN</div>
+      SAMURAI BLUE FAN
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html" class="active">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">ABOUT</h1>
+
+    <!-- PROFILE -->
+    <div class="profile-card">
+      <p>サッカー日本代表・サムライブルーへの愛をひとりのファンが綴る非公式サイトです。試合を観るたびに感じたこと、選手やチームへの想いを、コラム・イラスト・観戦記録という形で残しています。</p>
+      <p>ファンアートは主にデジタルと水彩で制作しています。スタジアムにも可能な限り足を運んでいます。</p>
+    </div>
+
+    <!-- LINKS -->
+    <p class="section-label">Links</p>
+    <div class="link-grid">
+      <a class="link-card" href="https://bsky.app/profile/azaleaazalea88.bsky.social" target="_blank" rel="noopener">
+        <div class="link-icon">🦋</div>
+        <div class="link-text">
+          <span class="link-name">Bluesky</span>
+          <span class="link-desc">近況・観戦記録</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://www.pixiv.net/" target="_blank" rel="noopener">
+        <div class="link-icon">🎨</div>
+        <div class="link-text">
+          <span class="link-name">Pixiv</span>
+          <span class="link-desc">ファンアート掲載</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://kakuyomu.jp/users/azalea_azalea72" target="_blank" rel="noopener">
+        <div class="link-icon">✒️</div>
+        <div class="link-text">
+          <span class="link-name">カクヨム</span>
+          <span class="link-desc">小説を掲載</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/Azaleamangaroom/" target="_blank" rel="noopener">
+        <div class="link-icon">📖</div>
+        <div class="link-text">
+          <span class="link-name">漫画サイト</span>
+          <span class="link-desc">オリジナル漫画</span>
+        </div>
+        <span class="link-arrow">›</span>
+      </a>
+    </div>
+
+    <!-- CONTACT -->
+    <p class="section-label">Contact</p>
+    <div class="form-card">
+      <p class="form-intro">ご感想・ご質問はフォームからどうぞ。</p>
+      <div class="form-success" id="formSuccess">✓ 送信しました。ありがとうございます！</div>
+      <form id="contactForm" action="https://formspree.io/f/maqvpvoz" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="name">お名前</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="名前（任意）">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">メールアドレス<span class="required">*</span></label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">メッセージ<span class="required">*</span></label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="メッセージを入力してください…" required></textarea>
+        </div>
+        <button class="form-submit" type="submit">Send</button>
+      </form>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+    </div>
+    Unofficial Fan Site — Not affiliated with JFA.
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
