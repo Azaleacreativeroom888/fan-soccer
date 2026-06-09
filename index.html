@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMURAI BLUE FAN — 日本代表応援サイト</title>
+  <meta name="description" content="サッカー日本代表・サムライブルーの非公式ファンサイト。試合記録、ファンアート、コラムを掲載。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0d1f52;
+      --navy-deep:  #080f2e;
+      --blue:       #1a3a7c;
+      --blue-mid:   #234fa0;
+      --red:        #c8102e;
+      --gold:       #d4af37;
+      --gold-light: #f0d060;
+      --white:      #f0f4ff;
+      --gray:       #8898bb;
+      --line:       rgba(212, 175, 55, 0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy-deep);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── UNIFORM STRIPE BG ── */
+    .uniform-bg {
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 68px,
+          rgba(26, 58, 124, 0.12) 68px,
+          rgba(26, 58, 124, 0.12) 72px
+        );
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(8, 15, 46, 0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 60px;
+    }
+
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .header-logo .badge {
+      width: 28px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      flex-shrink: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    nav a {
+      color: var(--gray);
+      transition: color 0.2s;
+      text-transform: uppercase;
+    }
+
+    nav a:hover,
+    nav a.active { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ユニフォームの縦ラインを模したデコレーション */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(
+          180deg,
+          var(--navy-deep) 0%,
+          var(--navy) 40%,
+          var(--blue) 80%,
+          var(--navy) 100%
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 79px,
+          rgba(255,255,255,0.04) 79px,
+          rgba(255,255,255,0.04) 80px
+        );
+      background-blend-mode: normal;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 160px;
+      background: linear-gradient(transparent, var(--navy-deep));
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 820px;
+    }
+
+    /* 背番号風ビッグナンバー */
+    .jersey-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(8rem, 25vw, 18rem);
+      line-height: 0.85;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(212, 175, 55, 0.4);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.2rem, 10vw, 7rem);
+      letter-spacing: 0.06em;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-title .accent {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+      margin-top: 0.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--navy-deep);
+      background: var(--gold);
+      padding: 0.75rem 2rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .hero-cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 5rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: 0.06em;
+      color: var(--white);
+      margin-bottom: 2.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* ── NEWS / LATEST ── */
+    #news { background: var(--navy-deep); }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .news-card {
+      background: var(--navy-deep);
+      padding: 1.8rem;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .news-card:hover { background: var(--navy); }
+
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--red);
+      transition: height 0.25s;
+    }
+
+    .news-card:hover::before { height: 100%; }
+
+    .card-date {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--navy-deep);
+      background: var(--gold);
+      padding: 0.1rem 0.55rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card-tag.red {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.5;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-excerpt {
+      font-size: 0.83rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ── MATCH SCHEDULE ── */
+    #matches {
+      background: var(--navy);
+    }
+
+    .match-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+
+    .match-row {
+      display: grid;
+      grid-template-columns: 100px 1fr auto 1fr 80px;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.8rem;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.18s;
+    }
+
+    .match-row:last-child { border-bottom: none; }
+    .match-row:hover { background: rgba(212,175,55,0.05); }
+
+    .match-date {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+    }
+
+    .match-team {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .match-team.home { text-align: right; }
+    .match-team.away { text-align: left; }
+
+    .match-score {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .match-competition {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-align: right;
+    }
+
+    /* ── GALLERY PREVIEW ── */
+    #gallery { background: var(--navy-deep); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      color: var(--gray);
+      font-size: 0.75rem;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
+      transition: opacity 0.2s;
+    }
+
+    .gallery-item:hover .gallery-placeholder {
+      opacity: 0.7;
+    }
+
+    .gallery-placeholder svg {
+      opacity: 0.3;
+      width: 36px; height: 36px;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 50%, rgba(8,15,46,0.85));
+      opacity: 0;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-caption {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .gallery-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 2rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.3rem;
+      transition: color 0.2s;
+    }
+
+    .gallery-link:hover { color: var(--gold-light); }
+
+    /* ── ABOUT BANNER ── */
+    #about-banner {
+      background: var(--blue);
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent 0, transparent 79px,
+        rgba(255,255,255,0.04) 79px, rgba(255,255,255,0.04) 80px
+      );
+      padding: 4rem 2rem;
+    }
+
+    .about-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 7rem;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--gold);
+      opacity: 0.4;
+    }
+
+    .about-text h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.8rem;
+    }
+
+    .about-text p {
+      font-size: 0.88rem;
+      color: rgba(240,244,255,0.7);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-link {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-deep);
+      border-top: 1px solid var(--line);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 1.8rem;
+      justify-content: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-nav a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(136,152,187,0.5);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { display: none; }
+
+      .match-row {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 0.3rem;
+      }
+      .match-team.home,
+      .match-team.away { text-align: center; }
+      .match-competition { text-align: center; }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .about-number { font-size: 4rem; }
+
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-logo">
+      <div class="badge">JPN</div>
+      SAMURAI BLUE FAN
+    </div>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero uniform-bg">
+    <div class="jersey-number">10</div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Japan National Football Team</p>
+      <h1 class="hero-title">
+        Samurai<br>
+        <span class="accent">Blue</span>
+      </h1>
+      <p class="hero-subtitle">サムライブルーとともに、世界へ。</p>
+      <a href="blog.html" class="hero-cta">
+        Latest Posts
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news">
+    <div class="section-inner">
+      <p class="section-label">Latest</p>
+      <h2 class="section-title">NEWS &amp; POSTS</h2>
+
+      <div class="news-grid">
+        <div class="news-card">
+          <p class="card-date">2025.06.01</p>
+          <span class="card-tag red">Match Report</span>
+          <p class="card-title">W杯アジア最終予選・突破への道筋を振り返る</p>
+          <p class="card-excerpt">全試合を通じて見えた日本代表の成長と、ワールドカップ本大会に向けた課題を整理する。</p>
+        </div>
+        <div class="news-card">
+          <p class="card-date">2025.05.22</p>
+          <span class="card-tag">Column</span>
+          <p class="card-title">サムライブルーの戦術変遷——守備ブロックからハイプレスへ</p>
+          <p class="card-excerpt">近年の日本代表を語るうえで外せない守備戦術の変化を、データとともに読み解く。</p>
+        </div>
+        <div class="news-card">
+          <p class="card-date">2025.05.15</p>
+          <span class="card-tag">Fan Art</span>
+          <p class="card-title">新作ファンアートをギャラリーに追加しました</p>
+          <p class="card-excerpt">親善試合観戦後のインスピレーションで描いた水彩スケッチをアップしました。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCH RESULTS -->
+  <section id="matches">
+    <div class="section-inner">
+      <p class="section-label">Results</p>
+      <h2 class="section-title">RECENT MATCHES</h2>
+
+      <div class="match-list">
+        <div class="match-row">
+          <span class="match-date">2025.05.28</span>
+          <span class="match-team home">日本</span>
+          <span class="match-score">3 — 1</span>
+          <span class="match-team away">韓国</span>
+          <span class="match-competition">Friendly</span>
+        </div>
+        <div class="match-row">
+          <span class="match-date">2025.05.20</span>
+          <span class="match-team home">日本</span>
+          <span class="match-score">2 — 0</span>
+          <span class="match-team away">オーストラリア</span>
+          <span class="match-competition">WC Qual.</span>
+        </div>
+        <div class="match-row">
+          <span class="match-date">2025.04.15</span>
+          <span class="match-team home">サウジアラビア</span>
+          <span class="match-score">0 — 2</span>
+          <span class="match-team away">日本</span>
+          <span class="match-competition">WC Qual.</span>
+        </div>
+        <div class="match-row">
+          <span class="match-date">2025.03.25</span>
+          <span class="match-team home">日本</span>
+          <span class="match-score">1 — 1</span>
+          <span class="match-team away">イラン</span>
+          <span class="match-competition">WC Qual.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY PREVIEW -->
+  <section id="gallery">
+    <div class="section-inner">
+      <p class="section-label">Fan Art</p>
+      <h2 class="section-title">GALLERY</h2>
+
+      <div class="gallery-grid">
+        <!-- Placeholder tiles — replace with <img> when you have actual artwork -->
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/>
+            </svg>
+            Fan Art · No.01
+          </div>
+          <div class="gallery-overlay">
+            <span class="gallery-caption">ゴールの瞬間</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+            Fan Art · No.02
+          </div>
+          <div class="gallery-overlay"><span class="gallery-caption">サムライブルーの背番号</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+            Fan Art · No.03
+          </div>
+          <div class="gallery-overlay"><span class="gallery-caption">スタジアムの夜</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+            Fan Art · No.04
+          </div>
+          <div class="gallery-overlay"><span class="gallery-caption">勝利の笑顔</span></div>
+        </div>
+      </div>
+
+      <a href="gallery.html" class="gallery-link">
+        View All Gallery
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT BANNER -->
+  <section id="about-banner">
+    <div class="about-inner">
+      <div class="about-number" aria-hidden="true">JPN</div>
+      <div class="about-text">
+        <h2>About This Site</h2>
+        <p>このサイトはサッカー日本代表・サムライブルーへの愛をひとりのファンが綴る非公式応援サイトです。試合コラム、ファンアート、観戦記録を発信しています。</p>
+        <a href="about.html" class="about-link">
+          Read More
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo">SAMURAI BLUE FAN</p>
+    <div class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+    </div>
+    <p class="footer-copy">非公式ファンサイト / Unofficial Fan Site — Not affiliated with JFA.</p>
+  </footer>
+
+</body>
+</html>
