@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — SAMURAI BLUE FAN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0d1f52;
+      --navy-deep: #080f2e;
+      --blue:      #1a3a7c;
+      --blue-mid:  #234fa0;
+      --red:       #c8102e;
+      --gold:      #d4af37;
+      --white:     #f0f4ff;
+      --gray:      #8898bb;
+      --line:      rgba(212, 175, 55, 0.25);
+    }
+
+    body {
+      background: var(--navy-deep);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(8, 15, 46, 0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 60px;
+    }
+
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .badge {
+      width: 28px; height: 28px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      flex-shrink: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    nav a { color: var(--gray); transition: color 0.2s; text-transform: uppercase; }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    /* MAIN */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 1.5rem 5rem;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-tabs button {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--gray);
+      padding: 0.3rem 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-tabs button:hover,
+    .filter-tabs button.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy-deep);
+    }
+
+    /* GRID */
+    .gallery-grid {
+      columns: 3;
+      column-gap: 3px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 3px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* プレースホルダー（実際の画像に差し替えてください） */
+    .gallery-item .placeholder {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
+      color: var(--gray);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .placeholder svg { opacity: 0.25; }
+
+    /* 実際の画像を使う場合は以下のように */
+    /* .gallery-item img { width: 100%; display: block; } */
+
+    .gallery-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 45%, rgba(8, 15, 46, 0.88));
+      opacity: 0;
+      transition: opacity 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+    }
+
+    .gallery-item:hover .overlay { opacity: 1; }
+
+    .overlay-title {
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .overlay-meta {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(4, 8, 24, 0.95);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      max-width: 700px;
+      width: 100%;
+      position: relative;
+    }
+
+    .lightbox-img {
+      width: 100%;
+      display: block;
+      background: var(--navy);
+    }
+
+    .lightbox-caption {
+      padding: 1rem 0 0;
+    }
+
+    .lightbox-caption h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .lightbox-caption p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -2.5rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: var(--gray);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.15s;
+    }
+
+    .lightbox-close:hover { color: var(--white); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-nav a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .gallery-grid { columns: 2; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid { columns: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html" class="header-logo">
+      <div class="badge">JPN</div>
+      SAMURAI BLUE FAN
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="gallery.html" class="active">Gallery</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h1 class="page-title">GALLERY</h1>
+      <div class="filter-tabs">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="illustration">Illustration</button>
+        <button data-filter="watercolor">Watercolor</button>
+        <button data-filter="sketch">Sketch</button>
+      </div>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+
+      <!-- 画像はここに追加。placeholderを<img src="..." alt="...">に差し替えてOK -->
+
+      <div class="gallery-item" data-tag="illustration" data-title="ゴールの瞬間" data-date="2025.06.01" onclick="openLightbox(this)">
+        <div class="placeholder" style="height:320px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          Illustration
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">ゴールの瞬間</p>
+          <p class="overlay-meta">Illustration · 2025.06.01</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-tag="watercolor" data-title="サムライブルーの夜明け" data-date="2025.05.15" onclick="openLightbox(this)">
+        <div class="placeholder" style="height:220px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          Watercolor
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">サムライブルーの夜明け</p>
+          <p class="overlay-meta">Watercolor · 2025.05.15</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-tag="sketch" data-title="試合後のスケッチ" data-date="2025.04.30" onclick="openLightbox(this)">
+        <div class="placeholder" style="height:260px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          Sketch
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">試合後のスケッチ</p>
+          <p class="overlay-meta">Sketch · 2025.04.30</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-tag="illustration" data-title="スタジアムの夜" data-date="2025.04.20" onclick="openLightbox(this)">
+        <div class="placeholder" style="height:200px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          Illustration
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">スタジアムの夜</p>
+          <p class="overlay-meta">Illustration · 2025.04.20</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-tag="watercolor" data-title="背番号10" data-date="2025.03.25" onclick="openLightbox(this)">
+        <div class="placeholder" style="height:300px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          Watercolor
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">背番号10</p>
+          <p class="overlay-meta">Watercolor · 2025.03.25</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-tag="sketch" data-title="ハーフタイムスケッチ" data-date="2025.03.10" onclick="openLightbox(this)">
+        <div class="placeholder" style="height:180px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          Sketch
+        </div>
+        <div class="overlay">
+          <p class="overlay-title">ハーフタイムスケッチ</p>
+          <p class="overlay-meta">Sketch · 2025.03.10</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightbox()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        Close
+      </button>
+      <!-- プレースホルダー表示（画像がある場合は<img>を入れる） -->
+      <div id="lightboxImg" class="lightbox-img"></div>
+      <div class="lightbox-caption">
+        <h2 id="lightboxTitle"></h2>
+        <p id="lightboxMeta"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+    </div>
+    Unofficial Fan Site — Not affiliated with JFA.
+  </footer>
+
+  <script>
+    // FILTER
+    document.querySelectorAll('.filter-tabs button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tabs button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.gallery-item').forEach(item => {
+          item.style.display = (filter === 'all' || item.dataset.tag === filter) ? '' : 'none';
+        });
+      });
+    });
+
+    // LIGHTBOX
+    function openLightbox(el) {
+      const title = el.dataset.title;
+      const date  = el.dataset.date;
+      const tag   = el.dataset.tag;
+
+      // 実際の画像がある場合は placeholder の div を img に差し替えてください
+      const ph = el.querySelector('.placeholder');
+      document.getElementById('lightboxImg').innerHTML =
+        `<div style="width:100%;height:400px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d1f52,#234fa0);font-family:'Oswald',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:#8898bb;">${tag} · ${title}</div>`;
+
+      document.getElementById('lightboxTitle').textContent = title;
+      document.getElementById('lightboxMeta').textContent  = tag.charAt(0).toUpperCase() + tag.slice(1) + ' · ' + date;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(e) {
+      if (e && e.target !== document.getElementById('lightbox') && !e.target.closest('.lightbox-close')) return;
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')});
+    });
+  </script>
+
+</body>
+</html>
